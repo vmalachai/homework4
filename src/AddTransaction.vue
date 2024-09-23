@@ -1,11 +1,10 @@
 <script setup>
-import {ref, defineEmits} from 'vue'
-const text = ref('')
-const amount = ref('')
+    import {ref, defineEmits} from 'vue'
+    const text = ref('')
+    const amount = ref('')
 
 const emit = defineEmits([
     'transactionSubmitted'
-
 ])
 
 const onSubmit = () =>{
@@ -20,10 +19,13 @@ const onSubmit = () =>{
     amount.value = ''
 
 }
+
+
 </script>
 
 
 <template>
+
 <h3>Add a new Transaction</h3>
 <form id="form" @submit.prevent="onSubmit">
     <div class="form-control">

@@ -1,17 +1,12 @@
 <script setup>
 import Header from './components/Head.vue';
 import Balance from './components/Balance.vue';
-import {ref,computed} from 'vue'
 import IncomeExpenses from './components/IncomeExpenses.vue';
 import AddTransaction from './AddTransaction.vue';
+import TransactionList from './components/TransactionList.vue';
 
-const transactions = ref([
-    {id: 1, text:'Paycheck', amount: 700.00},
-    {id: 2, text:'Water Bill', amount: -72.83},
-    {id: 3, text:'Electric Bill', amount: -153.89},
-    {id: 4, text:'Returned Item', amount: 20.00},
-])
-
+const transactions = ref([])
+import {ref,computed, onMounted} from 'vue'
 const sum = computed(()=>{
     return transactions.value.reduce((acc, x)=>{
         return acc+x.amount
@@ -32,6 +27,34 @@ const moneyOut = computed(()=>{
     },0)
 })
 
+const handleTransaction = (transactionData) =>{
+    transaction.value.push({
+        id: generateID(),
+        text: transactionData.text,
+        amount: transactionData.amount,
+    })
+    saveToLocalStorage()
+
+}
+const generateID =() =>{
+    return Math.floor(Math.random()*1000000)
+
+}
+
+const handleDelete = (id) => {
+    transactions.value = transactions.value.filter((x) => x.id !== id)
+}
+
+const saveToLocalStorage = () => {
+    localStorage.setitem('transactions', JSON.stringify(transaction.value))
+}
+
+onMounted(() => {
+    const savedtransactions = JSON.parse(localStorage.getItem('transactions'))
+    if(savedtransactions){
+        transactions.value = savedtransactions
+    }
+})
 </script>
 
 <template>
@@ -40,6 +63,7 @@ const moneyOut = computed(()=>{
 <div class="container">
     <Balance :total="sum"></Balance>
     <IncomeExpenses :income="moneyIn" :expense="moneyOut"> </IncomeExpenses>
-    <AddTransaction></AddTransaction>
+    <AddTransaction @transactionSubmitted="handleTransaction"></AddTransaction>
+    <TransactionList :transactions="transaction" @transactionDeleted="handleDelete"></TransactionList>
 </div>
 </template>
