@@ -23,7 +23,7 @@ const deleteTransaction = (id) => {
     <li v-for="x in transactions" v-bind:key="x.id"
     v-bind:class="x.amount < 0 ? 'minus' : 'plus'">
     {{ x.text }} <span>${{ x.amount }}</span>
-    <button @click="deketeTransaction(x.id)" class="delete-btn">X</button>    
+    <button @click="deleteTransaction(x.id)" class="delete-btn">X</button>    
 
     </li>
 </ul>
