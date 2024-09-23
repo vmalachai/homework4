@@ -1,5 +1,5 @@
 <script setup>
-import{defineProps, deinfeEmits} from 'vue'
+import{defineProps, defineEmits} from 'vue'
 
 const props= defineProps({
     transactions: {
