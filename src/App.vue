@@ -2,11 +2,11 @@
 import Header from './components/Head.vue';
 import Balance from './components/Balance.vue';
 import IncomeExpenses from './components/IncomeExpenses.vue';
-import AddTransaction from './AddTransaction.vue';
+import AddTransaction from './components/AddTransaction.vue';
 import TransactionList from './components/TransactionList.vue';
-
-const transactions = ref([])
 import {ref,computed, onMounted} from 'vue'
+const transactions = ref([])
+
 const sum = computed(()=>{
     return transactions.value.reduce((acc, x)=>{
         return acc+x.amount
